@@ -1,50 +1,54 @@
-
-    // Modal handlers
 const modal = document.getElementById('videoModal');
 const openModal = document.getElementById('watchDemo');
 const closeModal = document.getElementById('closeModal');
 const iframe = modal.querySelector('iframe');
+const video = modal.querySelector('video');
+
+function openModalFn() {
+  modal.classList.remove('hidden');
+
+  if (video) {
+    video.currentTime = 0; // restart
+    video.play();          // start playing
+  }
+
+  // For iframe (e.g. YouTube), you can reload src to autoplay if needed
+  if (iframe) {
+    const src = iframe.src;
+    iframe.src = '';       // Reset iframe to stop video
+    iframe.src = src;      // Reload iframe to start fresh
+  }
+}
 
 function closeModalFn() {
   modal.classList.add('hidden');
-  video.currentTime = 0; // Restart from beginning
-  video.play();
 
-  // Optional: Stop video playback by resetting src
+  if (video) {
+    video.pause();         // pause video
+    video.currentTime = 0; // reset to start
+  }
+
   if (iframe) {
-    const src = iframe.src;
-    iframe.src = ''; // Clear first to unload
-    iframe.src = src; // Restore
+    // Stop iframe video by resetting src
+    iframe.src = '';
   }
 }
 
-openModal.addEventListener('click', () => {
-  modal.classList.remove('hidden');
-});
-
+openModal.addEventListener('click', openModalFn);
 closeModal.addEventListener('click', closeModalFn);
 
-// Close when clicking outside the modal content
 modal.addEventListener('click', e => {
-  if (e.target === modal) {
-    closeModalFn();
-  }
+  if (e.target === modal) closeModalFn();
 });
 
-// Close on ESC key
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    closeModalFn();
-  }
+  if (e.key === 'Escape') closeModalFn();
 });
 
-// Close when video ends (for <video> tag only, not iframe)
-const video = modal.querySelector('video');
+// Video end event close modal (if <video> tag)
 if (video) {
   video.addEventListener('ended', closeModalFn);
 }
-
-
 
 
 
