@@ -1,4 +1,4 @@
-## Fancydoodle Desktop App
+## Fancydoodle Product Showcase
 
 [LIVE SITE](https://fancydoodle.github.io)
 
