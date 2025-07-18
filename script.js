@@ -6,6 +6,7 @@ const video = modal.querySelector('video');
 
 function openModalFn() {
   modal.classList.remove('hidden');
+  modal.classList.add('flex');
 
   if (video) {
     video.currentTime = 0; // restart
@@ -21,15 +22,21 @@ function openModalFn() {
 }
 
 function closeModalFn() {
+  // Exit fullscreen if active / video
+  if (document.fullscreenElement === video) {
+    document.exitFullscreen();
+  }
+
+
   modal.classList.add('hidden');
+  modal.classList.remove('flex');
 
   if (video) {
-    video.pause();         // pause video
-    video.currentTime = 0; // reset to start
+    video.pause();
+    video.currentTime = 0;
   }
 
   if (iframe) {
-    // Stop iframe video by resetting src
     iframe.src = '';
   }
 }
@@ -52,6 +59,17 @@ if (video) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     // Scroll fade-in animation
     const fadeElements = document.querySelectorAll('.fade-in');
 
@@ -64,6 +82,11 @@ if (video) {
     }, { threshold: 0.2 });
 
     fadeElements.forEach(el => observer.observe(el));
+
+
+
+
+
 
 
 
